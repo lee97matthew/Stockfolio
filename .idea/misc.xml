@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_register_user.xml" value="0.33" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_dashboard.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_register_user.xml" value="0.22" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_user_profile.xml" value="0.1933876811594203" />
       </map>
     </option>
   </component>

@@ -11,6 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Stockfolio">
         <activity
+            android:name=".Dashboard"
+            android:exported="false" />
+        <activity
+            android:name=".UserProfile"
+            android:exported="false" />
+        <activity
             android:name=".RegisterUser"
             android:exported="false" />
         <activity

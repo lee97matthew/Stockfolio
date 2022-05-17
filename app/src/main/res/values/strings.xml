@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Stockfolio</string>
+    <string name="firebase_url">https://stockfolio-e29ea-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </resources>

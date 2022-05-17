@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "225710087539",
+    "project_id": "stockfolio-e29ea",
+    "storage_bucket": "stockfolio-e29ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225710087539:android:c49468c418e7f65fa7f906",
+        "android_client_info": {
+          "package_name": "com.example.stockfolio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225710087539-45g4vbdu4e8a37ajthfng5b01h937ish.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYIEHtCgNGZ8f8ahNWStj2NEC2y0JmRPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225710087539-45g4vbdu4e8a37ajthfng5b01h937ish.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
