@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Stockfolio">
         <activity
-            android:name=".Stocks"
+            android:name=".Home"
             android:exported="false" />
         <activity
             android:name=".Dashboard"
