@@ -33,7 +33,7 @@ public class Home extends AppCompatActivity {
             public void onClick(View v) {
                 String ticker = et_dataInput.getText().toString();
 
-                stocksApi.getMarketPrice(ticker, new StocksApi.VolleyResponseListener() {
+                stocksApi.retrieveTickerSymbol(ticker, new StocksApi.VolleyResponseListener() {
                     @Override
                     public void onError(String message) {
                         Toast.makeText(Home.this, message, Toast.LENGTH_LONG).show();

@@ -36,7 +36,7 @@ public class StocksApi {
         void onResponse(Stock stock);
     }
 
-    public void getMarketPrice(String ticker, VolleyResponseListener volleyResponseListener) {
+    public void retrieveTickerSymbol(String ticker, VolleyResponseListener volleyResponseListener) {
         String url = QUERY + ticker;
 
         // Get JSON Object (curly braces {}) from API, JSON Array (square brackets [])
