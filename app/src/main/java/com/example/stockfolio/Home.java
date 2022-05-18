@@ -2,6 +2,7 @@ package com.example.stockfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,12 +36,15 @@ public class Home extends AppCompatActivity {
                 stocksApi.getMarketPrice(ticker, new StocksApi.VolleyResponseListener() {
                     @Override
                     public void onError(String message) {
-                        Toast.makeText(Home.this, "Something wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Home.this, message, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
-                    public void onResponse(double currentMarketPrice) {
-                        Toast.makeText(Home.this, String.format("Price of %s: %.2f", ticker, currentMarketPrice), Toast.LENGTH_LONG).show();
+                    public void onResponse(Stock stock) {
+                        Toast.makeText(Home.this, String.format("Price of %s: %.2f", ticker, stock.getRegularMarketPrice()), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Home.this, StockPage.class);
+                        intent.putExtra("stock", stock);
+                        startActivity(intent);
                     }
                 });
             }

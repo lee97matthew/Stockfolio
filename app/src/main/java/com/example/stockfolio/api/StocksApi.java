@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.stockfolio.RequestSingleton;
+import com.example.stockfolio.Stock;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +24,7 @@ public class StocksApi {
 
     Context context;
     double currentMarketPrice;
+    Stock stock;
 
     public StocksApi(Context context) {
         this.context = context;
@@ -31,7 +33,7 @@ public class StocksApi {
     public interface VolleyResponseListener {
         void onError(String message);
 
-        void onResponse(double currentMarketPrice);
+        void onResponse(Stock stock);
     }
 
     public void getMarketPrice(String ticker, VolleyResponseListener volleyResponseListener) {
@@ -45,8 +47,8 @@ public class StocksApi {
                         JSONObject jsonObject;
                         try {
                             jsonObject = response.getJSONObject("quoteResponse").getJSONArray("result").getJSONObject(0);
-                            currentMarketPrice = jsonObject.getDouble("regularMarketPrice");
-                            volleyResponseListener.onResponse(currentMarketPrice);
+                            stock = new Stock(jsonObject);
+                            volleyResponseListener.onResponse(stock);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -69,7 +71,5 @@ public class StocksApi {
 
         // Add the request to the RequestQueue.
         RequestSingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
-
-        // return currentMarketPrice;
     }
 }
