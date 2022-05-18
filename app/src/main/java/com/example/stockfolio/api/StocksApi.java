@@ -8,7 +8,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.stockfolio.RequestSingleton;
-import com.example.stockfolio.Stocks;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +18,8 @@ import java.util.Map;
 public class StocksApi {
 
     public static final String QUERY = "https://yh-finance.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=";
+    private static final String X_RAPIDAPI_HOST_VALUE = "yh-finance.p.rapidapi.com";
+    private static final String X_RAPIDAPI_KEY_VALUE = "c0302ed34bmsh4ae1b7b7eb0514bp1ff5adjsn4d70320ec3d7";
 
     Context context;
     double currentMarketPrice;
@@ -59,8 +60,8 @@ public class StocksApi {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("X-RapidAPI-Host", "yh-finance.p.rapidapi.com");
-                params.put("X-RapidAPI-Key", "c0302ed34bmsh4ae1b7b7eb0514bp1ff5adjsn4d70320ec3d7");
+                params.put("X-RapidAPI-Host", X_RAPIDAPI_HOST_VALUE);
+                params.put("X-RapidAPI-Key", X_RAPIDAPI_KEY_VALUE);
 
                 return params;
             }
