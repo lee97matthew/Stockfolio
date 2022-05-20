@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.stockfolio.api.StocksApi;
 
-public class Home extends AppCompatActivity {
+public class Search extends AppCompatActivity {
 
     Button btn_findStock;
     EditText et_dataInput;
@@ -19,13 +19,13 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_search);
 
         // assign values to each control on the layout
         btn_findStock = findViewById(R.id.btn_findStock);
         et_dataInput = findViewById(R.id.et_dataInput);
 
-        StocksApi stocksApi = new StocksApi(Home.this);
+        StocksApi stocksApi = new StocksApi(Search.this);
 
         // click listener for button
         btn_findStock.setOnClickListener(new View.OnClickListener() {
@@ -36,13 +36,13 @@ public class Home extends AppCompatActivity {
                 stocksApi.retrieveTickerSymbol(ticker, new StocksApi.VolleyResponseListener() {
                     @Override
                     public void onError(String message) {
-                        Toast.makeText(Home.this, message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(Search.this, message, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onResponse(Stock stock) {
-                        Toast.makeText(Home.this, String.format("Price of %s: %.2f", ticker, stock.getRegularMarketPrice()), Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(Home.this, StockPage.class);
+                        Toast.makeText(Search.this, String.format("Price of %s: %.2f", ticker, stock.getRegularMarketPrice()), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Search.this, StockPage.class);
                         intent.putExtra("stock", stock);
                         startActivity(intent);
                     }
