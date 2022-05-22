@@ -33,7 +33,7 @@ public class Search extends AppCompatActivity {
             public void onClick(View v) {
                 String ticker = et_dataInput.getText().toString();
 
-                stocksApi.retrieveTickerSymbol(ticker, new StocksApi.VolleyResponseListener() {
+                stocksApi.getQuote(ticker, new StocksApi.GetQuoteListener() {
                     @Override
                     public void onError(String message) {
                         Toast.makeText(Search.this, message, Toast.LENGTH_LONG).show();

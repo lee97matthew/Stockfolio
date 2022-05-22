@@ -21,19 +21,18 @@ import java.util.Map;
 
 public class StocksApi {
 
-    public static final String QUERY = "https://yh-finance.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=";
+    public static final String QUERY_QUOTE = "https://yh-finance.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=";
     public static final String QUERY_TRENDINGTICKERS = "https://yh-finance.p.rapidapi.com/market/get-trending-tickers?region=US";
     private static final String X_RAPIDAPI_HOST_VALUE = "yh-finance.p.rapidapi.com";
     private static final String X_RAPIDAPI_KEY_VALUE = "c0302ed34bmsh4ae1b7b7eb0514bp1ff5adjsn4d70320ec3d7";
 
     Context context;
-    double currentMarketPrice;
 
     public StocksApi(Context context) {
         this.context = context;
     }
 
-    public interface VolleyResponseListener {
+    public interface GetQuoteListener {
         void onError(String message);
 
         void onResponse(Stock stock);
@@ -45,8 +44,8 @@ public class StocksApi {
         void onResponse(List<Stock> stocks);
     }
 
-    public void retrieveTickerSymbol(String ticker, VolleyResponseListener volleyResponseListener) {
-        String url = QUERY + ticker;
+    public void getQuote(String ticker, GetQuoteListener getQuoteListener) {
+        String url = QUERY_QUOTE + ticker;
 
         // Get JSON Object (curly braces {}) from API, JSON Array (square brackets [])
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -58,7 +57,7 @@ public class StocksApi {
                         try {
                             jsonObjectStock = response.getJSONObject("quoteResponse").getJSONArray("result").getJSONObject(0);
                             stock = new Stock(jsonObjectStock);
-                            volleyResponseListener.onResponse(stock);
+                            getQuoteListener.onResponse(stock);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -66,7 +65,7 @@ public class StocksApi {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                volleyResponseListener.onError("Error!");
+                getQuoteListener.onError("Error!");
             }
         }) {
             @Override
