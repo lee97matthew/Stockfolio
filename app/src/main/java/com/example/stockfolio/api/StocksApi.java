@@ -23,6 +23,7 @@ public class StocksApi {
 
     public static final String QUERY_QUOTE = "https://yh-finance.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=";
     public static final String QUERY_TRENDINGTICKERS = "https://yh-finance.p.rapidapi.com/market/get-trending-tickers?region=US";
+    public static final String QUERY_AUTOCOMPLETE = "https://yh-finance.p.rapidapi.com/auto-complete?q=%s&region=US";
     private static final String X_RAPIDAPI_HOST_VALUE = "yh-finance.p.rapidapi.com";
     private static final String X_RAPIDAPI_KEY_VALUE = "c0302ed34bmsh4ae1b7b7eb0514bp1ff5adjsn4d70320ec3d7";
 
@@ -42,6 +43,12 @@ public class StocksApi {
         void onError(String message);
 
         void onResponse(List<Stock> stocks);
+    }
+
+    public interface GetAutoCompleteListener {
+        void onError(String message);
+
+        void onResponse(List<Stock> suggestedStocks);
     }
 
     public void getQuote(String ticker, GetQuoteListener getQuoteListener) {
@@ -83,7 +90,6 @@ public class StocksApi {
     }
 
     public void getTrendingTickers(GetTrendingTickersListener getTrendingTickersListener) {
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, QUERY_TRENDINGTICKERS, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -105,6 +111,43 @@ public class StocksApi {
             @Override
             public void onErrorResponse(VolleyError error) {
                 getTrendingTickersListener.onError("Error!");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("X-RapidAPI-Host", X_RAPIDAPI_HOST_VALUE);
+                params.put("X-RapidAPI-Key", X_RAPIDAPI_KEY_VALUE);
+
+                return params;
+            }
+        };
+    }
+
+    public void getAutoComplete(String userInput, GetAutoCompleteListener getAutoCompleteListener) {
+        String query = String.format(QUERY_AUTOCOMPLETE, userInput);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, query, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONArray jsonArraySuggestedStocks;
+                        List<Stock> suggestedStocks = new ArrayList<>();
+                        try {
+                            jsonArraySuggestedStocks = response.getJSONArray("quotes");
+                            for (int i = 0; i < jsonArraySuggestedStocks.length(); i++) {
+                                //JSONObject stock = jsonArraySuggestedStocks.getJSONObject(i);
+                                //suggestedStocks.add(new Stock(stock));
+                            }
+                            getAutoCompleteListener.onResponse(suggestedStocks);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                getAutoCompleteListener.onError("Error!");
             }
         }) {
             @Override
