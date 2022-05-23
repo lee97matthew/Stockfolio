@@ -10,6 +10,18 @@ import org.json.JSONObject;
 
 public class Stock extends AppCompatActivity implements Parcelable {
 
+    public class StockPreview {
+        private String symbol;
+        private String shortName;
+        private String typeDisp;
+
+        public StockPreview(JSONObject jsonObject) throws JSONException {
+            symbol = jsonObject.getString("symbol");
+            shortName = jsonObject.getString("shortName");
+            typeDisp = jsonObject.getString("typeDisp");
+        }
+    }
+
     // Data field values of Parcel objects are FIFO (must be retrieved in the order they were put in)
     private String symbol;
     private double regularMarketPrice;

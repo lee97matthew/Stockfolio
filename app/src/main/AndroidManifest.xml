@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".Stockfolio"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +26,7 @@
             android:name=".Stock"
             android:exported="false" />
         <activity
-            android:name=".Home"
+            android:name=".Search"
             android:exported="false" />
         <activity
             android:name=".Dashboard"
