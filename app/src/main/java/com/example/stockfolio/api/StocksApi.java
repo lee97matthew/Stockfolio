@@ -122,6 +122,9 @@ public class StocksApi {
                 return params;
             }
         };
+
+        // Add the request to the RequestQueue.
+        RequestSingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
     public void getAutoComplete(String userInput, GetAutoCompleteListener getAutoCompleteListener) {
