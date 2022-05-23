@@ -3,14 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_register_user.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.21965579710144928" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/activity_stock.xml" value="0.21965579710144928" />
-        <entry key="app/src/main/res/layout/activity_stock_page.xml" value="0.21965579710144928" />
-        <entry key="app/src/main/res/layout/activity_stocks.xml" value="0.24546878095986188" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/drawable/ic_home.xml" value="0.3828125" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/drawable/ic_person.xml" value="0.3828125" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/drawable/ic_view_stocks.xml" value="0.3828125" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_change_password.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_dashboard.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_forget_password.xml" value="0.25" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_register_user.xml" value="0.22" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_stock_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/activity_user_profile.xml" value="0.1933876811594203" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/fragment_dashboard.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/layout/fragment_stocks.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/reven/Java/stocks-andriod-app/Stockfolio/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
