@@ -31,7 +31,7 @@ public class Stockfolio extends Application {
             @Override
             public void onResponse(List<Stock> stocks) {
                 trendingStocks = stocks;
-                Toast.makeText(Stockfolio.this, "success! " + stocks.get(0), Toast.LENGTH_LONG).show();
+                Toast.makeText(Stockfolio.this, "fillTrendingStocks:success!", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -23,10 +23,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView register;
     private EditText editEmail, editPassword;
-    private Button login;
+    private Button login, btn_stocks;
     private ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
+
+    Stockfolio stockfolio = (Stockfolio) this.getApplication();
+//    stockfolio.fillTrendingStocks();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         login = (Button) findViewById(R.id.login);
         login.setOnClickListener(this);
+
+        btn_stocks = (Button) findViewById(R.id.btn_stocks);
+        btn_stocks.setOnClickListener(this);
 
         editEmail = (EditText) findViewById(R.id.email);
         editPassword = (EditText) findViewById(R.id.password);
@@ -54,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.login:
                 userLogin();
+                break;
+            case R.id.btn_stocks:
+                startActivity(new Intent(this, Search.class));
                 break;
         }
     }
