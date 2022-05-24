@@ -24,6 +24,34 @@ public class StockPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_page);
 
+        // Initialize nav bar
+        BottomNavigationView botNavView = findViewById(R.id.bottomNavigation);
+
+        // Set current selected item
+        botNavView.setSelectedItemId(R.id.stocks);
+
+        // Enable switching of page
+        botNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.stocks:
+                        startActivity(new Intent(getApplicationContext(), Search.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), UserProfile.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
         // instantiate local views
         text_stockName = (TextView) findViewById(R.id.text_stockName);
         text_regularMarketPrice = (EditText) findViewById(R.id.text_regularMarketPrice);
