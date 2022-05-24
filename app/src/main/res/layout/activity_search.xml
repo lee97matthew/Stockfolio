@@ -29,16 +29,34 @@
         app:layout_constraintStart_toEndOf="@+id/et_dataInput"
         app:layout_constraintTop_toTopOf="@+id/et_dataInput" />
 
-    <ListView
-        android:id="@+id/lv_userFavStocks"
-        android:layout_width="409dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="56dp"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/StockFolio_Blue"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/menu" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_trendingStocks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_trendingStocksLabel" />
+
+    <TextView
+        android:id="@+id/text_trendingStocksLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trending Stocks Today"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_dataInput" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

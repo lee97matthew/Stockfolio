@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Stockfolio extends Application {
 
-    private static List<Stock> trendingStocks;
+    private static List<Stock.StockPreview> trendingStocks;
     private static StocksApi stocksApi;
 
     @Override
@@ -29,10 +29,18 @@ public class Stockfolio extends Application {
             }
 
             @Override
-            public void onResponse(List<Stock> stocks) {
+            public void onResponse(List<Stock.StockPreview> stocks) {
                 trendingStocks = stocks;
                 Toast.makeText(Stockfolio.this, "fillTrendingStocks:success!", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public static List<Stock.StockPreview> getTrendingStocks() {
+        return trendingStocks;
+    }
+
+    public static void setTrendingStocks(List<Stock.StockPreview> trendingStocks) {
+        Stockfolio.trendingStocks = trendingStocks;
     }
 }

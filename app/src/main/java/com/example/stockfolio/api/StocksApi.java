@@ -42,7 +42,7 @@ public class StocksApi {
     public interface GetTrendingTickersListener {
         void onError(String message);
 
-        void onResponse(List<Stock> stocks);
+        void onResponse(List<Stock.StockPreview> stocks);
     }
 
     public interface GetAutoCompleteListener {
@@ -95,14 +95,15 @@ public class StocksApi {
                     @Override
                     public void onResponse(JSONObject response) {
                         JSONArray jsonArrayStocks;
-                        List<Stock> stocks = new ArrayList<>();
+                        List<Stock.StockPreview> trendingStocks = new ArrayList<>();
                         try {
                             jsonArrayStocks = response.getJSONObject("finance").getJSONArray("result").getJSONObject(0).getJSONArray("quotes");
+                            System.out.println("size of trending stocks: " + jsonArrayStocks.length());
                             for (int i = 0; i < jsonArrayStocks.length(); i++) {
                                 JSONObject stock = jsonArrayStocks.getJSONObject(i);
-                                stocks.add(new Stock(stock));
+                                trendingStocks.add(new Stock.StockPreview(stock));
                             }
-                            getTrendingTickersListener.onResponse(stocks);
+                            getTrendingTickersListener.onResponse(trendingStocks);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

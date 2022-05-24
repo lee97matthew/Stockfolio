@@ -32,10 +32,10 @@ public class Dashboard extends AppCompatActivity /*implements View.OnClickListen
                 switch (item.getItemId()) {
                     case R.id.dashboard:
                         return true;
-//                    case R.id.stocks: // disabled for now
-//                        startActivity(new Intent(getApplicationContext(), StockPage.class));
-//                        overridePendingTransition(0, 0);
-//                        return true;
+                    case R.id.stocks:
+                        startActivity(new Intent(getApplicationContext(), Search.class));
+                        overridePendingTransition(0, 0);
+                        return true;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), UserProfile.class));
                         overridePendingTransition(0, 0);
