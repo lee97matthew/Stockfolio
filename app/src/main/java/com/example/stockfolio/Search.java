@@ -2,6 +2,8 @@ package com.example.stockfolio;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,11 +22,31 @@ public class Search extends AppCompatActivity {
 
     Button btn_findStock;
     EditText et_dataInput;
+    Stockfolio stockfolio = (Stockfolio) this.getApplication();
+    List<Stock.StockPreview> trendingStocks;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        // retrieve trending stocks
+        trendingStocks = stockfolio.getTrendingStocks();
+
+        // Initialize RecyclerView
+        recyclerView = findViewById(R.id.rv_trendingStocks);
+        // use this setting to improve performance
+        recyclerView.setHasFixedSize(true);
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        // specify an adapter
+        mAdapter = new TrendingStocksRecycleViewAdapter(trendingStocks, this);
+        recyclerView.setAdapter(mAdapter);
 
         // Initialize nav bar
         BottomNavigationView botNavView = findViewById(R.id.bottomNavigation);

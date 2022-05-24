@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 public class Stock extends AppCompatActivity implements Parcelable {
 
-    public class StockPreview {
+    public static class StockPreview {
         private String symbol;
         private String shortName;
         private String typeDisp;
@@ -19,6 +19,30 @@ public class Stock extends AppCompatActivity implements Parcelable {
             symbol = jsonObject.getString("symbol");
             shortName = jsonObject.getString("shortName");
             typeDisp = jsonObject.getString("typeDisp");
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
+        }
+
+        public String getShortName() {
+            return shortName;
+        }
+
+        public void setShortName(String shortName) {
+            this.shortName = shortName;
+        }
+
+        public String getTypeDisp() {
+            return typeDisp;
+        }
+
+        public void setTypeDisp(String typeDisp) {
+            this.typeDisp = typeDisp;
         }
     }
 
