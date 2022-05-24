@@ -119,7 +119,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) { // User created successfully by Firebase
-                            User newUser = new User(fullName, email); // Create Java user class instance
+                            User newUser = new User(fullName, email, ""); // Create Java user class instance
 
                             // Instantiate Firebase Realtime Db Connection
                             FirebaseDatabase database = FirebaseDatabase.getInstance("https://stockfolio-e29ea-default-rtdb.asia-southeast1.firebasedatabase.app");
@@ -138,6 +138,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 progressBar.setVisibility(View.GONE);
 
                                                 // Redirect User
+                                                RegisterUser.super.onBackPressed();
                                             } else { // User data not persisted properly
                                                 Toast.makeText(RegisterUser.this, "User has not been successfully registered. Please try again!", Toast.LENGTH_LONG)
                                                         .show();

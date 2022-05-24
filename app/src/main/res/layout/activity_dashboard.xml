@@ -21,20 +21,20 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <Button-->
-<!--        android:id="@+id/goToProfile"-->
-<!--        android:layout_width="350dp"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:layout_marginTop="400dp"-->
-<!--        android:backgroundTint="@color/StockFolio_Green"-->
-<!--        android:text="Go To Profile Page"-->
-<!--        android:textAllCaps="false"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="26sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/banner" />-->
+    <Button
+        android:id="@+id/goToProfile"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="400dp"
+        android:backgroundTint="@color/StockFolio_Green"
+        android:text="Test add ticker"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/banner" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
