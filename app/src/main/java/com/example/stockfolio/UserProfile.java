@@ -48,10 +48,10 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
                         startActivity(new Intent(getApplicationContext(), Dashboard.class));
                         overridePendingTransition(0, 0);
                         return true;
-//                    case R.id.stocks: // disabled for now
-//                        startActivity(new Intent(getApplicationContext(), StockPage.class));
-//                        overridePendingTransition(0, 0);
-//                        return true;
+                    case R.id.stocks:
+                        startActivity(new Intent(getApplicationContext(), Search.class));
+                        overridePendingTransition(0, 0);
+                        return true;
                     case R.id.profile:
                         return true;
                 }
