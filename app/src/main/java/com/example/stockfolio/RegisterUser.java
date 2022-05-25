@@ -120,6 +120,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) { // User created successfully by Firebase
                             User newUser = new User(fullName, email); // Create Java user class instance
+                            // TODO: put in the stockslist, firebase get data, use the user as ref
 
                             // Instantiate Firebase Realtime Db Connection
                             FirebaseDatabase database = FirebaseDatabase.getInstance("https://stockfolio-e29ea-default-rtdb.asia-southeast1.firebasedatabase.app");
