@@ -95,7 +95,6 @@ public class Search extends AppCompatActivity implements TrendingStocksRecycleVi
 
                     @Override
                     public void onResponse(Stock stock) {
-                        Toast.makeText(Search.this, String.format("Price of %s: %.2f", ticker, stock.getRegularMarketPrice()), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Search.this, StockPage.class);
                         intent.putExtra("stock", stock);
                         startActivity(intent);

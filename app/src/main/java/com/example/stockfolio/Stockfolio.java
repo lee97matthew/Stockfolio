@@ -1,7 +1,6 @@
 package com.example.stockfolio;
 
 import android.app.Application;
-import android.content.Context;
 import android.widget.Toast;
 
 import com.example.stockfolio.api.StocksApi;
@@ -31,7 +30,6 @@ public class Stockfolio extends Application {
             @Override
             public void onResponse(List<Stock.StockPreview> stocks) {
                 trendingStocks = stocks;
-                Toast.makeText(Stockfolio.this, "fillTrendingStocks:success!", Toast.LENGTH_LONG).show();
             }
         });
     }
