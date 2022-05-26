@@ -1,14 +1,12 @@
 package com.example.stockfolio;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Stock extends AppCompatActivity implements Parcelable {
+public class Stock implements Parcelable {
 
     public static class StockPreview {
         private String symbol;
