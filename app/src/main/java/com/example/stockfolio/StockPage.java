@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,6 +58,9 @@ public class StockPage extends AppCompatActivity {
         text_regularMarketPrice = (EditText) findViewById(R.id.text_regularMarketPrice);
         btn_fav = (Button) findViewById(R.id.btn_fav);
 
+        // register the onClick listener
+        btn_fav.setOnClickListener(favListener);
+
         // retrieve Stock object from previous Activity
         Intent intent = getIntent();
         stock = (Stock) intent.getParcelableExtra("stock");
@@ -65,4 +69,13 @@ public class StockPage extends AppCompatActivity {
         text_stockName.setText(stock.getSymbol());
         text_regularMarketPrice.setText(String.valueOf(stock.getRegularMarketPrice()));
     }
+
+    // make button click change the text view
+    private View.OnClickListener favListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            btn_fav.setText("Favourited!");
+        }
+
+    };
+
 }
