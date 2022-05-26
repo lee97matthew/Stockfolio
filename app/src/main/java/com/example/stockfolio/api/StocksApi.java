@@ -98,7 +98,6 @@ public class StocksApi {
                         List<Stock.StockPreview> trendingStocks = new ArrayList<>();
                         try {
                             jsonArrayStocks = response.getJSONObject("finance").getJSONArray("result").getJSONObject(0).getJSONArray("quotes");
-                            System.out.println("size of trending stocks: " + jsonArrayStocks.length());
                             for (int i = 0; i < jsonArrayStocks.length(); i++) {
                                 JSONObject stock = jsonArrayStocks.getJSONObject(i);
                                 trendingStocks.add(new Stock.StockPreview(stock));
