@@ -62,7 +62,6 @@ public class StockPage extends AppCompatActivity {
         stock = (Stock) intent.getParcelableExtra("stock");
 
         // Update local views with information of Stock
-        Toast.makeText(this, "ticker: " + stock.getSymbol(), Toast.LENGTH_LONG).show();
         text_stockName.setText(stock.getSymbol());
         text_regularMarketPrice.setText(String.valueOf(stock.getRegularMarketPrice()));
     }

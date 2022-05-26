@@ -18,12 +18,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
-public class Search extends AppCompatActivity {
+public class Search extends AppCompatActivity implements TrendingStocksRecycleViewAdapter.OnTrendingStockListener {
 
     Button btn_findStock;
     EditText et_dataInput;
     Stockfolio stockfolio = (Stockfolio) this.getApplication();
     List<Stock.StockPreview> trendingStocks;
+    StocksApi stocksApi;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -45,7 +46,7 @@ public class Search extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // specify an adapter
-        mAdapter = new TrendingStocksRecycleViewAdapter(trendingStocks, this);
+        mAdapter = new TrendingStocksRecycleViewAdapter(trendingStocks, this, this);
         recyclerView.setAdapter(mAdapter);
 
         // Initialize nav bar
@@ -78,7 +79,7 @@ public class Search extends AppCompatActivity {
         btn_findStock = findViewById(R.id.btn_findStock);
         et_dataInput = findViewById(R.id.et_dataInput);
 
-        StocksApi stocksApi = new StocksApi(Search.this);
+        stocksApi = new StocksApi(Search.this);
 
         // click listener for button
         btn_findStock.setOnClickListener(new View.OnClickListener() {
@@ -94,12 +95,30 @@ public class Search extends AppCompatActivity {
 
                     @Override
                     public void onResponse(Stock stock) {
-                        Toast.makeText(Search.this, String.format("Price of %s: %.2f", ticker, stock.getRegularMarketPrice()), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Search.this, StockPage.class);
                         intent.putExtra("stock", stock);
                         startActivity(intent);
                     }
                 });
+            }
+        });
+    }
+
+    @Override
+    public void onTrendingStockClick(int position) {
+        Stock.StockPreview trendingStockSelected = trendingStocks.get(position);
+        String trendingStockTicker = trendingStockSelected.getSymbol();
+        stocksApi.getQuote(trendingStockTicker, new StocksApi.GetQuoteListener() {
+            @Override
+            public void onError(String message) {
+                Toast.makeText(Search.this, message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Stock stock) {
+                Intent intent = new Intent(Search.this, StockPage.class);
+                intent.putExtra("stock", stock);
+                startActivity(intent);
             }
         });
     }

@@ -15,17 +15,19 @@ public class TrendingStocksRecycleViewAdapter extends RecyclerView.Adapter<Trend
 
     List<Stock.StockPreview> trendingStocks;
     Context context;
+    private OnTrendingStockListener mOnTrendingStockListener;
 
-    public TrendingStocksRecycleViewAdapter(List<Stock.StockPreview> trendingStocks, Context context) {
+    public TrendingStocksRecycleViewAdapter(List<Stock.StockPreview> trendingStocks, Context context, OnTrendingStockListener onTrendingStockListener) {
         this.trendingStocks = trendingStocks;
         this.context = context;
+        this.mOnTrendingStockListener = onTrendingStockListener;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_line_stock, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
+        MyViewHolder holder = new MyViewHolder(view, mOnTrendingStockListener);
         return holder;
     }
 
@@ -41,16 +43,29 @@ public class TrendingStocksRecycleViewAdapter extends RecyclerView.Adapter<Trend
         return trendingStocks.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView symbol;
         TextView shortName;
         TextView typeDisp;
+        OnTrendingStockListener onTrendingStockListener;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnTrendingStockListener onTrendingStockListener) {
             super(itemView);
             symbol = itemView.findViewById(R.id.text_symbol);
             shortName = itemView.findViewById(R.id.text_shortName);
             typeDisp = itemView.findViewById(R.id.text_typeDisp);
+            this.onTrendingStockListener = onTrendingStockListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onTrendingStockListener.onTrendingStockClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnTrendingStockListener {
+        void onTrendingStockClick(int position);
     }
 }
