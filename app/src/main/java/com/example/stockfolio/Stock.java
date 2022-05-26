@@ -66,6 +66,11 @@ public class Stock extends AppCompatActivity implements Parcelable {
         regularMarketChange = jsonObject.getDouble("regularMarketChange");
     }
 
+    @Override
+    public String toString() {
+        return String.format("Stock: %s, RegularMarketPrice: %f, RegularMarketChange: %f", symbol, regularMarketPrice, regularMarketChange);
+    }
+
     public double getRegularMarketPrice() {
         return regularMarketPrice;
     }
