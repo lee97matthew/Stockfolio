@@ -1,14 +1,12 @@
 package com.example.stockfolio;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Stock extends AppCompatActivity implements Parcelable {
+public class Stock implements Parcelable {
 
     public static class StockPreview {
         private String symbol;
@@ -64,6 +62,11 @@ public class Stock extends AppCompatActivity implements Parcelable {
         symbol = jsonObject.getString("symbol");
         regularMarketPrice = jsonObject.getDouble("regularMarketPrice");
         regularMarketChange = jsonObject.getDouble("regularMarketChange");
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Stock: %s, RegularMarketPrice: %f, RegularMarketChange: %f", symbol, regularMarketPrice, regularMarketChange);
     }
 
     public double getRegularMarketPrice() {
