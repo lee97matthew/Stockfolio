@@ -41,24 +41,31 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/menu" />
 
+    <TextView
+        android:id="@+id/text_trendingStocksLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Trending stocks today"
+        android:textColor="@color/StockFolio_Blue"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_dataInput" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_trendingStocks"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_trendingStocksLabel" />
 
-    <TextView
-        android:id="@+id/text_trendingStocksLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Trending Stocks Today"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_dataInput" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
