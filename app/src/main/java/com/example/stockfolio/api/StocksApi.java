@@ -39,6 +39,12 @@ public class StocksApi {
         void onResponse(Stock stock);
     }
 
+    public interface GetQuoteUserListener {
+        void onError(String message);
+
+        void onResponse(Stock.StockPreview stock);
+    }
+
     public interface GetTrendingTickersListener {
         void onError(String message);
 
@@ -151,6 +157,42 @@ public class StocksApi {
             @Override
             public void onErrorResponse(VolleyError error) {
                 getAutoCompleteListener.onError("Error!");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("X-RapidAPI-Host", X_RAPIDAPI_HOST_VALUE);
+                params.put("X-RapidAPI-Key", X_RAPIDAPI_KEY_VALUE);
+
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        RequestSingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void getUserQuote(String ticker, GetQuoteUserListener getQuoteUserListener) {
+        String url = QUERY_QUOTE + ticker;
+
+        // Get JSON Object (curly braces {}) from API, JSON Array (square brackets [])
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONObject jsonObjectStock;
+                        try {
+                            jsonObjectStock = response.getJSONObject("quoteResponse").getJSONArray("result").getJSONObject(0);
+                            getQuoteUserListener.onResponse(new Stock.StockPreview(jsonObjectStock));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                getQuoteUserListener.onError("Error!");
             }
         }) {
             @Override
