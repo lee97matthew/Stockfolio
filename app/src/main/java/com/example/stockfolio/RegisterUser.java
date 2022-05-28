@@ -137,6 +137,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 Toast.makeText(RegisterUser.this, "User has been successfully registered!", Toast.LENGTH_LONG)
                                                         .show();
                                                 progressBar.setVisibility(View.GONE);
+                                                RegisterUser.super.onBackPressed();
 
                                                 // Redirect User
                                             } else { // User data not persisted properly

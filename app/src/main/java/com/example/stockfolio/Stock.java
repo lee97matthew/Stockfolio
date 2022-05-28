@@ -80,22 +80,23 @@ public class Stock extends AppCompatActivity implements Parcelable {
         return regularMarketChange;
     }
 
-    public void updateFavouriteStatus(User currentUser) {
-        for (Stock stock : currentUser.getFavoritedStocks()) {
-            if (this == stock) {
-                // TODO: display the button to be favorited
-                User updatedUser = currentUser.removeFavoritedStock(this);
-                // TODO: update the database of users to exclude the stock in the user's favoritedStocks
-                // TODO: animation of the button from favorite to favorited
-
-            } else {
-                // TODO: display the button to be favorite
-                // TODO: update the database of users to include the stock in the user's favoritedStocks
-                User updatedUser = currentUser.addFavoritedStock(this);
-                // TODO: animation of the button from favorite to favorited
-            }
-        }
-    }
+//    // TODO: Do we need this part
+//    public void updateFavouriteStatus(User currentUser) {
+//        for (Stock stock : currentUser.getFavoritedStocks()) {
+//            if (this == stock) {
+//                // TODO: display the button to be favorited
+//                User updatedUser = currentUser.removeFavoritedStock(this);
+//                // TODO: update the database of users to exclude the stock in the user's favoritedStocks
+//                // TODO: animation of the button from favorite to favorited
+//
+//            } else {
+//                // TODO: display the button to be favorite
+//                // TODO: update the database of users to include the stock in the user's favoritedStocks
+//                User updatedUser = currentUser.addFavoritedStock(this);
+//                // TODO: animation of the button from favorite to favorited
+//            }
+//        }
+//    }
 
     /* everything below here is for implementing Parcelable */
     @Override

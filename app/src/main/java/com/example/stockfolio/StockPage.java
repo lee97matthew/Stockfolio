@@ -33,6 +33,9 @@ public class StockPage extends AppCompatActivity {
     private TextView text_stockName, text_regularMarketPrice;
     private Button btn_fav;
     Stock stock;
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,34 @@ public class StockPage extends AppCompatActivity {
         Intent intent = getIntent();
         stock = (Stock) intent.getParcelableExtra("stock");
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance("https://stockfolio-e29ea-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        userId = user.getUid();
+
+        reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+
+                if (userProfile != null) {
+                    // check if userProfile.favStocks contains stock
+                    if (userProfile.favoritedStocks.contains(stock.getSymbol())) {
+                        // if contain, set button to favorited
+                        btn_fav.setText("Unfavorite");
+                    } else {
+                        // if not contain, set button as not-favorited
+                        btn_fav.setText("Add to Favorite");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(StockPage.this, "GG what did you do?", Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
+
         // Update local views with information of Stock
         text_stockName.setText(stock.getSymbol());
         text_regularMarketPrice.setText(String.valueOf(stock.getRegularMarketPrice()));
@@ -87,67 +118,119 @@ public class StockPage extends AppCompatActivity {
     // make button click change the text view
     private View.OnClickListener favListener = new View.OnClickListener() {
         public void onClick(View v) {
-            btn_fav.setText("Favourited!");
-            FirebaseUser user;
-            DatabaseReference reference;
-            String userId;
-            List<Stock> stocks = new ArrayList<>();
+            List<String> stocks = new ArrayList<>();
 
-            user = FirebaseAuth.getInstance().getCurrentUser();
-            reference = FirebaseDatabase.getInstance("https://stockfolio-e29ea-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
-            userId = user.getUid();
+            if (btn_fav.getText().equals("Unfavorite")) {
+                // unfavorite
+                reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User userProfile = snapshot.getValue(User.class);
 
-            reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User userProfile = snapshot.getValue(User.class);
+                        if (userProfile != null) {
+                            stocks.addAll(userProfile.getFavoritedStocks());
+                        }
 
-                    if (userProfile != null) {
-                        stocks.addAll(userProfile.getFavoritedStocks());
+                        Toast.makeText(StockPage.this, "Favs retrieved, " + stocks.toString(), Toast.LENGTH_LONG)
+                                .show();
+
+                        stocks.remove(stock.getSymbol());
+
+                        reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Map<String, Object> postValues = new HashMap<String,Object>();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    postValues.put(snapshot.getKey(),snapshot.getValue());
+                                }
+                                postValues.put("favoritedStocks", stocks);
+                                reference.child(userId).updateChildren(postValues)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(StockPage.this, "Successfully updated!", Toast.LENGTH_LONG)
+                                                            .show();
+                                                    btn_fav.setText("Add to Favorite");
+                                                } else {
+                                                    Toast.makeText(StockPage.this, "Not successfully updated!", Toast.LENGTH_LONG)
+                                                            .show();
+                                                }
+                                            }
+                                        });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(StockPage.this, "Not successfully updated!", Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
                     }
 
-                    Toast.makeText(StockPage.this, "Favs retrieved, " + stocks.toString(), Toast.LENGTH_LONG)
-                            .show();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(StockPage.this, "GG what did you do?", Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
 
-                    stocks.add(stock);
+            } else {
+                reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User userProfile = snapshot.getValue(User.class);
 
-                    reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Map<String, Object> postValues = new HashMap<String,Object>();
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                postValues.put(snapshot.getKey(),snapshot.getValue());
-                            }
-                            postValues.put("favTickers", stocks);
-                            reference.child(userId).updateChildren(postValues)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(StockPage.this, "Successfully updated!", Toast.LENGTH_LONG)
-                                                        .show();
-                                            } else {
-                                                Toast.makeText(StockPage.this, "Not successfully updated!", Toast.LENGTH_LONG)
-                                                        .show();
+                        if (userProfile != null) {
+                            stocks.addAll(userProfile.getFavoritedStocks());
+                        }
+
+                        Toast.makeText(StockPage.this, "Favs retrieved, " + stocks.toString(), Toast.LENGTH_LONG)
+                                .show();
+
+                        stocks.add(stock.getSymbol());
+
+                        reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Map<String, Object> postValues = new HashMap<String,Object>();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    postValues.put(snapshot.getKey(),snapshot.getValue());
+                                }
+                                postValues.put("favoritedStocks", stocks);
+                                reference.child(userId).updateChildren(postValues)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(StockPage.this, "Successfully updated!", Toast.LENGTH_LONG)
+                                                            .show();
+                                                    btn_fav.setText("Unfavorite");
+                                                } else {
+                                                    Toast.makeText(StockPage.this, "Not successfully updated!", Toast.LENGTH_LONG)
+                                                            .show();
+                                                }
                                             }
-                                        }
-                                    });
-                        }
+                                        });
+                            }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(StockPage.this, "Not successfully updated!", Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-                }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(StockPage.this, "Not successfully updated!", Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                    }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(StockPage.this, "GG what did you do?", Toast.LENGTH_LONG)
-                            .show();
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(StockPage.this, "GG what did you do?", Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+
         }
 
     };
