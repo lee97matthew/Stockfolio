@@ -1,3 +1,5 @@
+package com.example.stockfolio;
+
 public class DailyPrice {
 
     private String dailyDate;

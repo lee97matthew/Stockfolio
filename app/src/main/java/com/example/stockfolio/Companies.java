@@ -1,6 +1,10 @@
+package com.example.stockfolio;
+
+import java.util.ArrayList;
+
 public class Companies {
 
-    private ArrayList<Company> listedCompanies;
+    public ArrayList<Company> listedCompanies;
 
     public Companies(ArrayList<Company> listedCompanies) {
         this.listedCompanies = listedCompanies;

@@ -1,7 +1,10 @@
+package com.example.stockfolio;
+
+import java.util.ArrayList;
 public class Company {
 
     private String companySymbol;
-    private ArrayList<DailyPrice> companyStockPrices;
+    public ArrayList<DailyPrice> companyStockPrices;
 
     public Company(String companySymbol, ArrayList<DailyPrice> companyStockPrices) {
         this.companySymbol = companySymbol;
