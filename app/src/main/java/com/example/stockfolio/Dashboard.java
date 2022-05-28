@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.stockfolio.api.StocksApi;
@@ -22,12 +25,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dashboard extends AppCompatActivity implements FavoritedStocksRecycleViewAdapter.FavoritedStockListener {
-    Stockfolio stockfolio = (Stockfolio) this.getApplication();
+    Stockfolio stockfolio;
     List<Stock.StockPreview> favStocks;
     StocksApi stocksApi;
+    private ProgressBar progressBar;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -41,8 +46,12 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance("https://stockfolio-e29ea-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
         String userId = user.getUid();
+        stockfolio = (Stockfolio) this.getApplication();
+        favStocks = new ArrayList<Stock.StockPreview>();
 
-        reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE); // Show progress bar
+        reference.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
@@ -50,12 +59,19 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
                 if (userProfile != null) {
                     // retrieve user's fav stocks
                     List<String> stocks = userProfile.getFavoritedStocks();
-                    Toast.makeText(Dashboard.this, "list is: " + stocks, Toast.LENGTH_LONG)
-                            .show();
+//                    Toast.makeText(Dashboard.this, "list is: " + stocks, Toast.LENGTH_LONG)
+//                            .show();
                     stocks.remove("test");
-
+//                    Log.d("here0", stocks.toString());
                     // retrieve fav stocks data
                     favStocks = stockfolio.getFavStocks(stocks);
+//                    Log.d("here1", favStocks.toString());
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            favStocks = stockfolio.getUserStocks();
+//                            Log.d("here12", favStocks.toString());
+                        }
+                    }, 3500); // 3.5 seconds
                 }
             }
 
@@ -74,8 +90,17 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // specify an adapter
-        mAdapter = new FavoritedStocksRecycleViewAdapter(favStocks, this, this);
-        recyclerView.setAdapter(mAdapter);
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                setRecycleViewData();
+                progressBar.setVisibility(View.GONE);
+            }
+        }, 5000); // 5 seconds
+
+//        Log.d("here2",favStocks.toString());
+//        mAdapter = new FavoritedStocksRecycleViewAdapter(favStocks, this, this);
+//        recyclerView.setAdapter(mAdapter);
 
         // Initialize nav bar
         BottomNavigationView botNavView = findViewById(R.id.bottomNavigation);
@@ -113,7 +138,7 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
         stocksApi.getQuote(trendingStockTicker, new StocksApi.GetQuoteListener() {
             @Override
             public void onError(String message) {
-                Toast.makeText(Dashboard.this, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(Dashboard.this, "smth happened", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -123,5 +148,11 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
                 startActivity(intent);
             }
         });
+    }
+
+    public void setRecycleViewData() {
+        Log.d("here2",favStocks.toString());
+        mAdapter = new FavoritedStocksRecycleViewAdapter(favStocks, this, this);
+        recyclerView.setAdapter(mAdapter);
     }
 }

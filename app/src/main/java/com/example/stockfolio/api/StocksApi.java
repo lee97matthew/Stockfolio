@@ -1,6 +1,7 @@
 package com.example.stockfolio.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -42,7 +43,7 @@ public class StocksApi {
     public interface GetQuoteUserListener {
         void onError(String message);
 
-        void onResponse(Stock.StockPreview stock);
+        void onResponse(List<Stock.StockPreview> stocks);
     }
 
     public interface GetTrendingTickersListener {
@@ -174,17 +175,29 @@ public class StocksApi {
     }
 
     public void getUserQuote(String ticker, GetQuoteUserListener getQuoteUserListener) {
+//        Log.d("here7", "getUserQuote");
+//        Log.d("hereSymbol", ticker);
         String url = QUERY_QUOTE + ticker;
+//        Log.d("hereURL", url);
 
         // Get JSON Object (curly braces {}) from API, JSON Array (square brackets [])
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        JSONObject jsonObjectStock;
+//                        Log.d("here8", "onResponse");
+                        JSONArray jsonArrayStocks;
+                        List<Stock.StockPreview> favStocks = new ArrayList<>();
+
                         try {
-                            jsonObjectStock = response.getJSONObject("quoteResponse").getJSONArray("result").getJSONObject(0);
-                            getQuoteUserListener.onResponse(new Stock.StockPreview(jsonObjectStock));
+                            jsonArrayStocks = response.getJSONObject("quoteResponse").getJSONArray("result");
+                            for (int i = 0; i < jsonArrayStocks.length(); i++) {
+                                JSONObject stock = jsonArrayStocks.getJSONObject(i);
+                                favStocks.add(new Stock.StockPreview(stock));
+                            }
+//                            Log.d("here9", favStocks.toString());
+                            getQuoteUserListener.onResponse(favStocks);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -192,6 +205,7 @@ public class StocksApi {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+//                Log.d("here8", "onErrorResponse");
                 getQuoteUserListener.onError("Error!");
             }
         }) {
@@ -199,7 +213,7 @@ public class StocksApi {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("X-RapidAPI-Host", X_RAPIDAPI_HOST_VALUE);
-                params.put("X-RapidAPI-Key", X_RAPIDAPI_KEY_VALUE);
+                params.put("X-RapidAPI-Key", "e8fc6df944mshd56970fe068ee82p10748djsneb5118143f0e");
 
                 return params;
             }

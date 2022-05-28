@@ -1,11 +1,12 @@
 package com.example.stockfolio;
 
 import android.app.Application;
+import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.stockfolio.api.StocksApi;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,13 @@ public class Stockfolio extends Application {
 
     private static List<Stock.StockPreview> trendingStocks;
     private static StocksApi stocksApi;
+    private static List<Stock.StockPreview> userStocks;
 
     @Override
     public void onCreate() {
         super.onCreate();
         stocksApi = new StocksApi(getApplicationContext());
+        userStocks = new ArrayList<>();
         fillTrendingStocks();
     }
 
@@ -45,23 +48,32 @@ public class Stockfolio extends Application {
     }
 
     public List<Stock.StockPreview> getFavStocks(List<String> stocks) {
-        List<Stock.StockPreview> userFavStocks = new ArrayList<>();
+//        Log.d("here3", "enter getFavStocks");
+        final List<Stock.StockPreview>[] userFavStocks = new List[]{new ArrayList<Stock.StockPreview>()};
 
-        for (String s : stocks) {
-            stocksApi.getUserQuote(s, new StocksApi.GetQuoteUserListener() {
-                @Override
-                public void onError(String message) {
-                    Toast.makeText(Stockfolio.this, message, Toast.LENGTH_LONG).show();
-                }
+//        Log.d("here4", stocks.toString());
+        String str = stocks.toString();
+        String newStr = str.substring(1,str.length()-1);
+        newStr = newStr.replace(" ","");
+//        Log.d("here5", newStr);
+        stocksApi.getUserQuote(newStr, new StocksApi.GetQuoteUserListener() {
+            @Override
+            public void onError(String message) {
+//                Log.d("here5", "onError");
+                Toast.makeText(Stockfolio.this, message, Toast.LENGTH_LONG).show();
+            }
 
-                @Override
-                public void onResponse(Stock.StockPreview stock) {
-                    userFavStocks.add(stock);
-                }
-            });
+            @Override
+            public void onResponse(List<Stock.StockPreview> stocks) {
+//                Log.d("here10", "stockfolio onResponse");
+                userStocks = stocks;
+            }
+        });
 
-        }
+        return userFavStocks[0];
+    }
 
-        return userFavStocks;
+    public List<Stock.StockPreview> getUserStocks() {
+        return userStocks;
     }
 }
