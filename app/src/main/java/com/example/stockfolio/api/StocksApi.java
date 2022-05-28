@@ -26,7 +26,7 @@ public class StocksApi {
     public static final String QUERY_AUTOCOMPLETE = "https://yh-finance.p.rapidapi.com/auto-complete?q=%s&region=US";
     private static final String X_RAPIDAPI_HOST_VALUE = "yh-finance.p.rapidapi.com";
     private static final String X_RAPIDAPI_KEY_VALUE = "c0302ed34bmsh4ae1b7b7eb0514bp1ff5adjsn4d70320ec3d7";
-
+    // TODO: insert to retrieve historical data
     Context context;
 
     public StocksApi(Context context) {

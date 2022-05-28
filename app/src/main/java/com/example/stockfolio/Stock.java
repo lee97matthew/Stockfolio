@@ -48,14 +48,16 @@ public class Stock implements Parcelable {
     private String symbol;
     private double regularMarketPrice;
     private double regularMarketChange;
-    // TODO - userFavorited - a boolean indicating if a stock has been favorited by the user, involves use of Firebase
-    private boolean userFavorited;
 
     // constructor that takes a Parcel and gives you an object populated with it's values
     private Stock(Parcel in) {
         symbol = in.readString();
         regularMarketPrice = in.readDouble();
         regularMarketChange = in.readDouble();
+    }
+
+    // empty Stock to ensure the list of favoritedStocks never becomes empty
+    public Stock() {
     }
 
     public Stock(JSONObject jsonObject) throws JSONException {
@@ -81,9 +83,23 @@ public class Stock implements Parcelable {
         return regularMarketChange;
     }
 
-    public boolean isUserFavorited() {
-        return userFavorited;
-    }
+//    // TODO: Do we need this part
+//    public void updateFavouriteStatus(User currentUser) {
+//        for (Stock stock : currentUser.getFavoritedStocks()) {
+//            if (this == stock) {
+//                // TODO: display the button to be favorited
+//                User updatedUser = currentUser.removeFavoritedStock(this);
+//                // TODO: update the database of users to exclude the stock in the user's favoritedStocks
+//                // TODO: animation of the button from favorite to favorited
+//
+//            } else {
+//                // TODO: display the button to be favorite
+//                // TODO: update the database of users to include the stock in the user's favoritedStocks
+//                User updatedUser = currentUser.addFavoritedStock(this);
+//                // TODO: animation of the button from favorite to favorited
+//            }
+//        }
+//    }
 
     /* everything below here is for implementing Parcelable */
     @Override
