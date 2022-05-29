@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -131,9 +132,6 @@ public class StockPage extends AppCompatActivity {
                             stocks.addAll(userProfile.getFavoritedStocks());
                         }
 
-                        Toast.makeText(StockPage.this, "Favs retrieved, " + stocks.toString(), Toast.LENGTH_LONG)
-                                .show();
-
                         stocks.remove(stock.getSymbol());
 
                         reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -184,9 +182,6 @@ public class StockPage extends AppCompatActivity {
                         if (userProfile != null) {
                             stocks.addAll(userProfile.getFavoritedStocks());
                         }
-
-                        Toast.makeText(StockPage.this, "Favs retrieved, " + stocks.toString(), Toast.LENGTH_LONG)
-                                .show();
 
                         stocks.add(stock.getSymbol());
 

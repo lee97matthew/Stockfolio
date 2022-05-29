@@ -1,6 +1,7 @@
 package com.example.stockfolio.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,7 +26,7 @@ public class StocksApi {
     public static final String QUERY_TRENDINGTICKERS = "https://yh-finance.p.rapidapi.com/market/get-trending-tickers?region=US";
     public static final String QUERY_AUTOCOMPLETE = "https://yh-finance.p.rapidapi.com/auto-complete?q=%s&region=US";
     private static final String X_RAPIDAPI_HOST_VALUE = "yh-finance.p.rapidapi.com";
-    private static final String X_RAPIDAPI_KEY_VALUE = "c0302ed34bmsh4ae1b7b7eb0514bp1ff5adjsn4d70320ec3d7";
+    private static final String X_RAPIDAPI_KEY_VALUE = "f5b035e0dfmsh8c1500ff6d901c4p1ffb19jsna35d38f3fb91";
     // TODO: insert to retrieve historical data
     Context context;
 
@@ -37,6 +38,12 @@ public class StocksApi {
         void onError(String message);
 
         void onResponse(Stock stock);
+    }
+
+    public interface GetQuoteUserListener {
+        void onError(String message);
+
+        void onResponse(List<Stock.StockPreview> stocks);
     }
 
     public interface GetTrendingTickersListener {
@@ -158,6 +165,49 @@ public class StocksApi {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("X-RapidAPI-Host", X_RAPIDAPI_HOST_VALUE);
                 params.put("X-RapidAPI-Key", X_RAPIDAPI_KEY_VALUE);
+
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        RequestSingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void getUserQuote(String ticker, GetQuoteUserListener getQuoteUserListener) {
+        String url = QUERY_QUOTE + ticker;
+
+        // Get JSON Object (curly braces {}) from API, JSON Array (square brackets [])
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONArray jsonArrayStocks;
+                        List<Stock.StockPreview> favStocks = new ArrayList<>();
+
+                        try {
+                            jsonArrayStocks = response.getJSONObject("quoteResponse").getJSONArray("result");
+                            for (int i = 0; i < jsonArrayStocks.length(); i++) {
+                                JSONObject stock = jsonArrayStocks.getJSONObject(i);
+                                favStocks.add(new Stock.StockPreview(stock));
+                            }
+                            getQuoteUserListener.onResponse(favStocks);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                getQuoteUserListener.onError("Error!");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("X-RapidAPI-Host", X_RAPIDAPI_HOST_VALUE);
+                params.put("X-RapidAPI-Key", "e8fc6df944mshd56970fe068ee82p10748djsneb5118143f0e");
 
                 return params;
             }
