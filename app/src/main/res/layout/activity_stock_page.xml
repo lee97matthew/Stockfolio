@@ -7,10 +7,23 @@
     tools:context=".StockPage">
 
     <TextView
+        android:id="@+id/text_stockInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Stock Information"
+        android:textColor="@color/StockFolio_Blue"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/text_stockName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="84dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/btn_fav"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +42,8 @@
         android:id="@+id/text_regularMarketPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
