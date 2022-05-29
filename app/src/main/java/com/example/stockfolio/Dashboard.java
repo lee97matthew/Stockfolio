@@ -59,17 +59,12 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
                 if (userProfile != null) {
                     // retrieve user's fav stocks
                     List<String> stocks = userProfile.getFavoritedStocks();
-//                    Toast.makeText(Dashboard.this, "list is: " + stocks, Toast.LENGTH_LONG)
-//                            .show();
                     stocks.remove("test");
-//                    Log.d("here0", stocks.toString());
                     // retrieve fav stocks data
                     favStocks = stockfolio.getFavStocks(stocks);
-//                    Log.d("here1", favStocks.toString());
                     new Handler().postDelayed(new Runnable() {
                         public void run() {
                             favStocks = stockfolio.getUserStocks();
-//                            Log.d("here12", favStocks.toString());
                         }
                     }, 3500); // 3.5 seconds
                 }
@@ -97,10 +92,6 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
                 progressBar.setVisibility(View.GONE);
             }
         }, 5000); // 5 seconds
-
-//        Log.d("here2",favStocks.toString());
-//        mAdapter = new FavoritedStocksRecycleViewAdapter(favStocks, this, this);
-//        recyclerView.setAdapter(mAdapter);
 
         // Initialize nav bar
         BottomNavigationView botNavView = findViewById(R.id.bottomNavigation);
@@ -143,9 +134,7 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
 
             @Override
             public void onResponse(Stock stock) {
-                Log.d("here","favoritedStockClick onResponse");
                 Intent intent = new Intent(Dashboard.this, StockPage.class);
-                Log.d("here1",stock.getSymbol());
                 intent.putExtra("stock", stock);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
@@ -154,7 +143,6 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
     }
 
     public void setRecycleViewData() {
-        Log.d("here0",favStocks.toString());
         mAdapter = new FavoritedStocksRecycleViewAdapter(favStocks, this, this);
         recyclerView.setAdapter(mAdapter);
     }

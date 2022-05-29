@@ -48,24 +48,19 @@ public class Stockfolio extends Application {
     }
 
     public List<Stock.StockPreview> getFavStocks(List<String> stocks) {
-//        Log.d("here3", "enter getFavStocks");
         final List<Stock.StockPreview>[] userFavStocks = new List[]{new ArrayList<Stock.StockPreview>()};
 
-//        Log.d("here4", stocks.toString());
         String str = stocks.toString();
         String newStr = str.substring(1,str.length()-1);
         newStr = newStr.replace(" ","");
-//        Log.d("here5", newStr);
         stocksApi.getUserQuote(newStr, new StocksApi.GetQuoteUserListener() {
             @Override
             public void onError(String message) {
-//                Log.d("here5", "onError");
                 Toast.makeText(Stockfolio.this, message, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onResponse(List<Stock.StockPreview> stocks) {
-//                Log.d("here10", "stockfolio onResponse");
                 userStocks = stocks;
             }
         });

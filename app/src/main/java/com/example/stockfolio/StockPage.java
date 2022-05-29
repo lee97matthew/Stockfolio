@@ -42,7 +42,6 @@ public class StockPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_page);
-        Log.d("here2","enter StockPage");
 
         // Initialize nav bar
         BottomNavigationView botNavView = findViewById(R.id.bottomNavigation);
@@ -133,9 +132,6 @@ public class StockPage extends AppCompatActivity {
                             stocks.addAll(userProfile.getFavoritedStocks());
                         }
 
-                        Toast.makeText(StockPage.this, "Favs retrieved, " + stocks.toString(), Toast.LENGTH_LONG)
-                                .show();
-
                         stocks.remove(stock.getSymbol());
 
                         reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -186,9 +182,6 @@ public class StockPage extends AppCompatActivity {
                         if (userProfile != null) {
                             stocks.addAll(userProfile.getFavoritedStocks());
                         }
-
-                        Toast.makeText(StockPage.this, "Favs retrieved, " + stocks.toString(), Toast.LENGTH_LONG)
-                                .show();
 
                         stocks.add(stock.getSymbol());
 

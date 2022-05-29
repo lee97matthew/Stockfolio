@@ -175,17 +175,13 @@ public class StocksApi {
     }
 
     public void getUserQuote(String ticker, GetQuoteUserListener getQuoteUserListener) {
-//        Log.d("here7", "getUserQuote");
-//        Log.d("hereSymbol", ticker);
         String url = QUERY_QUOTE + ticker;
-//        Log.d("hereURL", url);
 
         // Get JSON Object (curly braces {}) from API, JSON Array (square brackets [])
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-//                        Log.d("here8", "onResponse");
                         JSONArray jsonArrayStocks;
                         List<Stock.StockPreview> favStocks = new ArrayList<>();
 
@@ -195,7 +191,6 @@ public class StocksApi {
                                 JSONObject stock = jsonArrayStocks.getJSONObject(i);
                                 favStocks.add(new Stock.StockPreview(stock));
                             }
-//                            Log.d("here9", favStocks.toString());
                             getQuoteUserListener.onResponse(favStocks);
 
                         } catch (JSONException e) {
@@ -205,7 +200,6 @@ public class StocksApi {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-//                Log.d("here8", "onErrorResponse");
                 getQuoteUserListener.onError("Error!");
             }
         }) {
