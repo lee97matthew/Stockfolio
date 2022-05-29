@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,7 @@ public class StockPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_page);
+        Log.d("here2","enter StockPage");
 
         // Initialize nav bar
         BottomNavigationView botNavView = findViewById(R.id.bottomNavigation);

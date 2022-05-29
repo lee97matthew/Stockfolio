@@ -130,11 +130,11 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
 
     }
 
-
     @Override
     public void favoritedStockClick(int position) {
         Stock.StockPreview favStockSelected = favStocks.get(position);
         String trendingStockTicker = favStockSelected.getSymbol();
+        stocksApi = new StocksApi(Dashboard.this);
         stocksApi.getQuote(trendingStockTicker, new StocksApi.GetQuoteListener() {
             @Override
             public void onError(String message) {
@@ -143,15 +143,18 @@ public class Dashboard extends AppCompatActivity implements FavoritedStocksRecyc
 
             @Override
             public void onResponse(Stock stock) {
+                Log.d("here","favoritedStockClick onResponse");
                 Intent intent = new Intent(Dashboard.this, StockPage.class);
+                Log.d("here1",stock.getSymbol());
                 intent.putExtra("stock", stock);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
             }
         });
     }
 
     public void setRecycleViewData() {
-        Log.d("here2",favStocks.toString());
+        Log.d("here0",favStocks.toString());
         mAdapter = new FavoritedStocksRecycleViewAdapter(favStocks, this, this);
         recyclerView.setAdapter(mAdapter);
     }
