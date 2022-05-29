@@ -26,7 +26,7 @@ public class StocksApi {
     public static final String QUERY_TRENDINGTICKERS = "https://yh-finance.p.rapidapi.com/market/get-trending-tickers?region=US";
     public static final String QUERY_AUTOCOMPLETE = "https://yh-finance.p.rapidapi.com/auto-complete?q=%s&region=US";
     private static final String X_RAPIDAPI_HOST_VALUE = "yh-finance.p.rapidapi.com";
-    private static final String X_RAPIDAPI_KEY_VALUE = "c0302ed34bmsh4ae1b7b7eb0514bp1ff5adjsn4d70320ec3d7";
+    private static final String X_RAPIDAPI_KEY_VALUE = "f5b035e0dfmsh8c1500ff6d901c4p1ffb19jsna35d38f3fb91";
     // TODO: insert to retrieve historical data
     Context context;
 
